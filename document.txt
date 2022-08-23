@@ -1,0 +1,17 @@
+Admin
+-create user
+-report
+-input pembayaran
+-Riwayat Pengguna Kos
+-activate user
+Ibu Kos
+-activate user
+-report
+-input pembayaran
+-Riwayat Pengguna Kos
+-Riwayat Pengguna Kos
+Staf
+-activate user
+-input pembayaran
+user
+-self report
