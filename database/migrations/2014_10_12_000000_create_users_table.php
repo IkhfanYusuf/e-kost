@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('status')->default("pending");
             $table->string('id_card')->nullable();
             $table->string('id_card_img')->nullable();
+            $table->string('id_card_with_user')->nullable();
             $table->enum('gender', ['Laki-laki', 'Perempuan']);
             $table->date('entry_date')->nullable();
             $table->foreignId('room_id')->nullable();

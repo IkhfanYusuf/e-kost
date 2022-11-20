@@ -84,6 +84,7 @@ class UserController extends Controller
         }
 
         $file = $request->file('id_card_img');
+        $file1 = $request->file('id_card_with_user');
 
         $request->validate([
             'name' => ['required', 'max:50'],
@@ -113,6 +114,7 @@ class UserController extends Controller
                 'entry' => ['required'],
                 'id_card' => ['required'],
                 'id_card_img' => ['required'],
+                'id_card_with_user' => ['required'],
 
             ], [
 
@@ -120,6 +122,7 @@ class UserController extends Controller
                 'entry.required' => 'Kolom tanggal masuk tidak boleh kosong.',
                 'id_card.required' => 'Nomor ktp tidak boleh kosong',
                 'id_card_img.required' => 'Upload gambar ktp',
+                'id_card_with_user.required' => 'Upload gambar diri beserta kartu identitas',
 
             ]);
         }
@@ -129,6 +132,7 @@ class UserController extends Controller
 
             $fileName = Carbon::now()->timestamp;
             $file->storeAs('id-card-images', $fileName . '.' . $file->extension());
+            $file1->storeAs('id-card-with-user', $fileName . '.' . $file1->extension());
 
             User::create([
                 'name' => $request->input('name'),
@@ -140,6 +144,7 @@ class UserController extends Controller
                 'gender' => $request->input('gender'),
                 'id_card' => $request->input('id_card'),
                 'id_card_img' => $fileName . '.' . $file->extension(),
+                'id_card_with_user' => $fileName . '.' . $file1->extension(),
                 'status' => 'active',
                 'password' => Hash::make($request->input('password'))
             ]);

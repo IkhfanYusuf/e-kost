@@ -11,7 +11,7 @@ class Room extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['room_name', 'room_price', 'room_facility'];
+    protected $fillable = ['categoryId', 'room_name', 'room_price', 'room_facility'];
 
     public function user()
     {
@@ -21,5 +21,10 @@ class Room extends Model
     public function image()
     {
         return $this->hasMany(Image::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

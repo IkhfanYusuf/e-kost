@@ -93,9 +93,10 @@ defineProps({
     <div class="mt-8" id="room">
       <div class="mx-auto sm:px-6 lg:px-8 max-w-6xl">
         <h1 class="inline-block text-xl font-bold pb-2 border-b-2 border-black">
-          Kamar Tersedia
+          Pilih Tipe Kamar
         </h1>
       </div>
+
       <div class="
           max-w-6xl
           mx-auto
@@ -109,102 +110,23 @@ defineProps({
           justify-between
           items-between
         ">
-        <div v-show="price" v-for="item in rooms" :key="item.id"
-          class="card shadow sm:rounded-xl col-span-3 rounded overflow-hidden">
-          <div class="h-36 overflow-hidden max-w-full relative">
-            <img v-if="!item.image[0]" class="" src="/room.jpg" alt="" />
 
-            <img v-else class="" :src="'/storage/post-images/' + item.image[0].room_image" alt="" />
-            <div v-if="item.deleted_at" class="w-full h-full z-10 top-0 absolute bg-black opacity-50"></div>
-            <span v-if="item.deleted_at" class="
-                absolute
-                font-bold
-                text-white text-3xl
-                top-12
-                left-16
-                z-20
-                opacity-50
-              ">Tersewa</span>
-          </div>
+        <div v-for="item in rooms"
+          class="cursor-pointer group relative card shadow sm:rounded-xl col-span-4 rounded overflow-hidden">
+          <div
+            class="w-1/3 absolute right-0 transform translate-x-full bg-black bg-opacity-70 h-full group-hover:translate-x-0 flex flex-col justify-center items-center  text-white transition-all">
 
-          <div class="p-6">
-            <h4 class="
-                font-semibold
-                text-black text-opacity-50
-                mb-1
-                text
-                flex
-                items-center
-              ">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-black text-opacity-20 inline-block mr-2"
-                viewBox="0 0 20 20" fill="currentColor">
-                <path
-                  d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-              </svg><span>Kamar {{ item.room_name }}</span>
-            </h4>
-            <div v-if="item.deleted_at" class="
-                my-2
-                p-1
-                px-2
-                bg-red-400
-                text-white
-                rounded-full
-                text-sm
-                inline-block
-              ">
-              Tersewa
+            <div class="">
+              <span class=" block" v-if="item.categoryId == 1">Tipe A</span>
+              <span class="block" v-if="item.categoryId == 2">Tipe B</span>
+              <span class="block" v-if="item.categoryId == 3">Tipe C</span>
             </div>
-            <div v-if="!item.deleted_at" class="
-                my-2
-                p-1
-                px-2
-                bg-green-400
-                text-white
-                rounded-full
-                text-sm
-                inline-block
-              ">
-              Kosong
-            </div>
-            <div></div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-2 text-black text-opacity-20"
-              viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd"
-                d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"
-                clip-rule="evenodd" />
-            </svg>
-
-            <span class="
-                text-black text-opacity-80
-                font-bold
-                mb-4
-                text-sm
-                opacity-80
-              ">{{ item.room_price
-              }}<small class="text-sm opacity-40">/bulan</small></span>
-            <Link :href="route('home.show', [item.id])" class="
-                mt-6
-                w-full
-                px-4
-                py-2
-                flex
-                items-center
-                bg-green-600
-                rounded-full
-                text-white
-                justify-center
-              ">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-1" viewBox="0 0 20 20"
-              fill="currentColor">
-              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
-              <path fill-rule="evenodd"
-                d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
-                clip-rule="evenodd" />
-            </svg>
-            <span class="font-bold">Detail</span>
-            </Link>
+            <span class="text-4xl font-bold block">+{{ item.total }}</span>
           </div>
+          <img :src="'/storage/post-images/' + item.image[0].room_image" alt="">
+
         </div>
+
       </div>
       <footer class="border-t p-6">
         <p class="text-center text-sm">

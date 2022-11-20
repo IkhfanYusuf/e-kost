@@ -37,6 +37,7 @@ class User extends Authenticatable
         'room_id',
         'id_card',
         'id_card_img',
+        'id_card_with_user',
         'entry_date',
     ];
 

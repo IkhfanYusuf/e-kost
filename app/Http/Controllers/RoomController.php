@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Image;
 use App\Models\Room;
 use Carbon\Carbon;
@@ -22,6 +23,13 @@ class RoomController extends Controller
         return Inertia::render('Rooms/index', ['rooms' => $rooms]);
     }
 
+    public function roomsByCategory(Request $request)
+    {
+        $category = $request->input('categoryId');
+        $rooms = Room::with('image')->where('categoryId', $category)->get();
+        return response()->json($rooms);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -29,7 +37,8 @@ class RoomController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Rooms/create');
+        $categories = Category::all();
+        return Inertia::render('Rooms/create', ['categories' => $categories]);
     }
 
     /**
@@ -49,12 +58,14 @@ class RoomController extends Controller
         $request->validate([
             'room_name' => ['required', 'unique:rooms'],
             'room_price' => ['required'],
+            'room_category' => ['required'],
             'room_facility' => ['required'],
             'room_image' => ['required'],
             'room_image.*' => ['image', 'file', 'max:4096'],
 
         ], [
             'room_name.required' => 'Nomor kamar harus diisi.',
+            'room_category.required' => 'Kategori kamar harus diisi.',
             'room_name.unique' => 'Nama kamar tidak boleh sama.',
             'room_price.required' => 'Nomor harga per bulan harus diisi.',
             'room_facility.required' => 'Fasilitas kamar harus diisi.',
@@ -70,6 +81,7 @@ class RoomController extends Controller
         $room = Room::create([
             'room_name' => $request->input('room_name'),
             'room_price' => $request->input('room_price'),
+            'categoryId' => $request->input('room_category'),
             'room_facility' => $request->input('room_facility'),
         ]);
 

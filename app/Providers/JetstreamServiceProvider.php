@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Actions\Jetstream\DeleteUser;
-use App\Models\Room;
+use App\Models\Category;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
 use Laravel\Fortify\Fortify;
@@ -33,8 +33,8 @@ class JetstreamServiceProvider extends ServiceProvider
         Jetstream::deleteUsersUsing(DeleteUser::class);
 
         Fortify::registerView(function () {
-            $rooms = Room::all();
-            return Inertia::render('Auth/Register', ['rooms' => $rooms]);
+            $categories = Category::all();
+            return Inertia::render('Auth/Register', ['categories' => $categories]);
         });
     }
 

@@ -9,108 +9,66 @@ import AppLayout from "@/Layouts/AppLayout.vue";
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
           <div class="grid grid-cols-6 gap-6">
             <div class="col-span-5">
-              <form
-                @submit.prevent="handleSubmit"
-                enctype="multipart/form-data"
-              >
+              <form @submit.prevent="handleSubmit" enctype="multipart/form-data">
                 <div class="mb-4">
-                  <label for="" class="font-bold block mb-2 text-gray-600"
-                    >Kamar Nomor</label
-                  >
-                  <input
-                    type="number"
-                    v-model="form.room_name"
-                    class="px-4 py-2 rounded-lg w-full"
-                    placeholder="Masukan No Kamar"
-                  />
-                  <div
-                    class="mb-2 text-red-400 text-sm"
-                    v-if="errors.room_name"
-                  >
+                  <label for="" class="font-bold block mb-2 text-gray-600">Kamar Nomor</label>
+                  <input type="number" v-model="form.room_name" class="px-4 py-2 rounded-lg w-full"
+                    placeholder="Masukan No Kamar" />
+                  <div class="mb-2 text-red-400 text-sm" v-if="errors.room_name">
                     {{ errors.room_name }}
                   </div>
                 </div>
                 <div class="mb-4">
-                  <label for="" class="font-bold block mb-2 text-gray-600"
-                    >Harga per Bulan</label
-                  >
-                  <input
-                    type="number"
-                    v-model="form.room_price"
-                    class="px-4 py-2 rounded-lg w-full"
-                    placeholder="Masukan Harga per Bulan"
-                  />
-                  <div
-                    class="mb-2 text-red-400 text-sm"
-                    v-if="errors.room_price"
-                  >
+                  <label for="" class="font-bold block mb-2 text-gray-600">Tipe Kamar</label>
+                  <select type="number" v-model="form.room_category" class="px-4 py-2 rounded-lg w-full"
+                    placeholder="Masukan No Kamar">
+                    <option value="">-- Tipe Kamar --</option>
+                    <option v-for="item in categories" :value="item.id">{{ item.type }}</option>
+                  </select>
+                  <div class="mb-2 text-red-400 text-sm" v-if="errors.room_category">
+                    {{ errors.room_category }}
+                  </div>
+                </div>
+                <div class="mb-4">
+                  <label for="" class="font-bold block mb-2 text-gray-600">Harga per Bulan</label>
+                  <input type="number" v-model="form.room_price" class="px-4 py-2 rounded-lg w-full"
+                    placeholder="Masukan Harga per Bulan" />
+                  <div class="mb-2 text-red-400 text-sm" v-if="errors.room_price">
                     {{ errors.room_price }}
                   </div>
                 </div>
                 <div class="mb-4">
-                  <label for="" class="font-bold block mb-2 text-gray-600"
-                    >Fasilitas</label
-                  >
+                  <label for="" class="font-bold block mb-2 text-gray-600">Fasilitas</label>
                   <!-- <textarea
                   type="text"
                   class="px-4 py-2 rounded-lg w-full"
                   placeholder="Fasilitas"
                 ></textarea> -->
-                  <ckeditor
-                    :editor="editor"
-                    class="px-4 py-2 rounded-lg w-full"
-                    v-model="form.room_facility"
-                    :config="editorConfig"
-                  ></ckeditor>
-                  <div
-                    class="mb-2 text-red-400 text-sm"
-                    v-if="errors.room_facility"
-                  >
+                  <ckeditor :editor="editor" class="px-4 py-2 rounded-lg w-full" v-model="form.room_facility"
+                    :config="editorConfig"></ckeditor>
+                  <div class="mb-2 text-red-400 text-sm" v-if="errors.room_facility">
                     {{ errors.room_facility }}
                   </div>
                 </div>
                 <div class="mb-4">
-                  <label for="" class="font-bold block mb-2 text-gray-600"
-                    >Gambar</label
-                  >
-                  <input
-                    @input="form.room_image[0] = $event.target.files[0]"
-                    type="file"
-                    class="py-2 rounded-lg w-full"
-                  />
+                  <label for="" class="font-bold block mb-2 text-gray-600">Gambar</label>
+                  <input @input="form.room_image[0] = $event.target.files[0]" type="file"
+                    class="py-2 rounded-lg w-full" />
 
-                  <div
-                    class="mb-2 text-red-400 text-sm"
-                    v-if="errors['room_image']"
-                  >
+                  <div class="mb-2 text-red-400 text-sm" v-if="errors['room_image']">
                     {{ errors["room_image"] }}
                   </div>
-                  <div
-                    class="mb-2 text-red-400 text-sm"
-                    v-if="errors['room_image.0']"
-                  >
+                  <div class="mb-2 text-red-400 text-sm" v-if="errors['room_image.0']">
                     File 1 : {{ errors["room_image.0"] }}
                   </div>
-                  <input
-                    @input="form.room_image[1] = $event.target.files[0]"
-                    type="file"
-                    class="py-2 rounded-lg w-full"
-                  />
-                  <div
-                    class="mb-2 text-red-400 text-sm"
-                    v-if="errors['room_image.1']"
-                  >
+                  <input @input="form.room_image[1] = $event.target.files[0]" type="file"
+                    class="py-2 rounded-lg w-full" />
+                  <div class="mb-2 text-red-400 text-sm" v-if="errors['room_image.1']">
                     File 2 : {{ errors["room_image.1"] }}
                   </div>
-                  <input
-                    @input="form.room_image[2] = $event.target.files[0]"
-                    type="file"
-                    class="py-2 rounded-lg w-full"
-                  />
-                  <div
-                    class="mb-2 text-red-400 text-sm"
-                    v-if="errors['room_image.2']"
-                  >
+                  <input @input="form.room_image[2] = $event.target.files[0]" type="file"
+                    class="py-2 rounded-lg w-full" />
+                  <div class="mb-2 text-red-400 text-sm" v-if="errors['room_image.2']">
                     File 3 : {{ errors["room_image.2"] }}
                   </div>
                   <!-- <input
@@ -131,11 +89,7 @@ import AppLayout from "@/Layouts/AppLayout.vue";
                   <div class="mb-2 text-red-400 text-sm" v-if="errors">
                     {{ errors }}
                   </div> -->
-                  <progress
-                    v-if="form.progress"
-                    :value="form.progress.percentage"
-                    max="100"
-                  >
+                  <progress v-if="form.progress" :value="form.progress.percentage" max="100">
                     {{ form.progress.percentage }}%
                   </progress>
                 </div>
@@ -163,12 +117,13 @@ export default {
   data() {
     return {
       editor: ClassicEditor,
+      category: null,
       editorConfig: {
         // The configuration of the editor.
       },
       form: useForm({
         room_name: "",
-        room_name: "",
+        room_category: "",
         room_price: "",
         room_facility: "",
         room_image: [],
@@ -177,6 +132,7 @@ export default {
   },
   props: {
     errors: Object,
+    categories: Object
   },
   methods: {
     handleSubmit() {

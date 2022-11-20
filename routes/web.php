@@ -66,6 +66,9 @@ Route::middleware(['not.anak.kost', 'auth:sanctum'])->name('rooms.')->prefix('ro
     Route::delete('/{room}', [RoomController::class, 'destroy'])->name('destroy');
 });
 
+//get rooms on register
+Route::post('rooms/find', [RoomController::class, 'roomsByCategory'])->name('find.rooms');
+
 Route::name('home.')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('index');
     Route::get('/{id}', [HomeController::class, 'show'])->name('show');

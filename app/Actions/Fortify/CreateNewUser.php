@@ -23,7 +23,8 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input)
     {
         $file = $input['id_card_img'];
-        
+        $file1 = $input['id_card_with_user'];
+
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'unique:users', 'alpha_dash'],
@@ -44,9 +45,10 @@ class CreateNewUser implements CreatesNewUsers
 
         ])->validate();
 
-        
+
         $fileName = Carbon::now()->timestamp;
         $file->storeAs('id-card-images', $fileName . '.' . $file->extension());
+        $file1->storeAs('id-card-with-user', $fileName . '1' . '.' . $file1->extension());
 
         $user = User::create([
             'name' => $input['name'],
@@ -58,12 +60,11 @@ class CreateNewUser implements CreatesNewUsers
             'room_id' => $input['room'],
             'id_card' => $input['id_card'],
             'id_card_img' => $fileName . '.' . $file->extension(),
+            'id_card_with_user' => $fileName . '1' . '.' . $file1->extension(),
         ]);
 
         Room::where('id', $input['room'])->delete();
 
         return $user;
     }
-
-    
 }

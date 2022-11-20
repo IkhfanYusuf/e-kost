@@ -13,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('rooms', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('categoryId');
-            $table->bigInteger('room_name');
-            $table->text('room_facility');
-            $table->bigInteger('room_price');
-            $table->softDeletes();
+            $table->string("type");
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rooms');
+        Schema::dropIfExists('categories');
     }
 };
